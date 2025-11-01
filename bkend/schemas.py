@@ -13,6 +13,13 @@ class VoteType(enum.Enum):
     UPVOTE = "upvote"
     DOWNVOTE = "downvote"
 
+class Category(enum.Enum):
+    CRONY = "crony"
+    NONSENSE = "NONSENSE"
+    AI = "ai-please-save-us"
+    GRIFT = "grift"
+    GRAFT = "graft"
+
 
 class UserCreate(BaseModel):
     email: EmailStr

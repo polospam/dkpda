@@ -7,7 +7,7 @@ from sqlalchemy import Boolean, DateTime, ForeignKey, String, create_engine
 from sqlalchemy import Enum as SQLEnum
 from sqlalchemy.orm import Mapped, Session, declarative_base, mapped_column, relationship
 
-from .schemas import VoteType
+from .schemas import VoteType, Category
 
 # Database URL comes from the environment (DATABASE_URL). If not provided,
 # default to a sqlite file placed next to this module (bkend/articles.db).
@@ -23,7 +23,13 @@ engine = create_engine(
 SessionLocal = Session
 Base = declarative_base()
 
+def init_db(base=None, engine_override=None):
+    """Initialize DB tables. Pass a specific Base or engine_override for tests if needed."""
+    base = base or Base
+    eng = engine_override or engine
+    base.metadata.create_all(bind=eng)
 
+# Models
 class User(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -43,6 +49,10 @@ class Article(Base):
     title: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)
     image_url: Mapped[str] = mapped_column(String, nullable=True)
+    category: Mapped[Category] = mapped_column(
+        SQLEnum(Category),
+        nullable=False,
+        default=Category.GRAFT)
     author_id: Mapped[Optional[int]] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(
@@ -63,17 +73,7 @@ class Vote(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     article_id: Mapped[int] = mapped_column(ForeignKey("articles.id"), nullable=False)
-    vote_type: Mapped[VoteType] = mapped_column(
-        SQLEnum(VoteType),
-        nullable=False,
-    )
+    vote_type: Mapped[VoteType] = mapped_column(SQLEnum(VoteType), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc))
     user: Mapped[User] = relationship("User", back_populates="votes")
     article: Mapped[Article] = relationship("Article", back_populates="votes")
-
-
-def init_db(base=None, engine_override=None):
-    """Initialize DB tables. Pass a specific Base or engine_override for tests if needed."""
-    base = base or Base
-    eng = engine_override or engine
-    base.metadata.create_all(bind=eng)
