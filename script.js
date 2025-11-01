@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const el = document.createElement('article');
 
         const img = document.createElement('img');
-        img.src = './media/cfclasspic.png';
+        img.src = article.image_url;
         img.alt = 'Satirical Image';
 
         const topic = document.createElement('span');
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const meta = document.createElement('div');
         meta.className = 'meta';
-        meta.textContent = `Upvotes: ${article.upvotes}  Downvotes: ${article.downvotes}`;
+        meta.textContent = `👍 ${article.upvotes}`;
 
         el.appendChild(img);
         el.appendChild(topic);
