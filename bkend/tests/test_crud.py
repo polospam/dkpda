@@ -40,7 +40,7 @@ def test_article_crud_and_votes(in_memory_db):
     # create user
     user = crud.create_user(db, email="bob@example.com", hashed_password="pw")
     # create article
-    article = crud.create_article(db, title="Hello", content="World", author_id=user.id)
+    article = crud.create_article(db, title="Hello", content="World", image_url="url",author_id=user.id)
     assert article.id is not None
     # initially no votes
     art = crud.get_article_with_votes(db, article.id, user.id)
@@ -77,10 +77,11 @@ def test_article_crud_and_votes(in_memory_db):
 def test_update_and_delete_article(in_memory_db):
     db = in_memory_db
     user = crud.create_user(db, email="carol@example.com", hashed_password="pw")
-    article = crud.create_article(db, title="Old", content="Body", author_id=user.id)
-    updated = crud.update_article(db, article_id=article.id, title="New", content=None)
+    article = crud.create_article(db, title="Old", content="Body", image_url="url", author_id=user.id)
+    updated = crud.update_article(db, article_id=article.id, title="New", image_url="u2", content=None)
     assert updated is not None
     assert updated.title == "New"
+    assert updated.image_url == "u2"
     ok = crud.delete_article(db, article_id=article.id)
     assert ok is True
     missing = crud.get_article_with_votes(db, article_id=article.id, current_user_id=user.id)

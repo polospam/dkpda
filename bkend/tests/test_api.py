@@ -52,7 +52,7 @@ def test_article_crud_and_vote_flow(in_memory_session):
     voter = crud.create_user(db, email="voter2@example.com", hashed_password="pw")
 
     # create article via endpoint
-    art_in = ArticleCreate(title="Unit Article", content="body")
+    art_in = ArticleCreate(title="Unit Article", content="body", image_url="url")
     created = app_main.create_article(art_in, current_user=admin, db=db)
     assert created["title"] == "Unit Article"
     article_id = created["id"]
@@ -85,7 +85,7 @@ def test_update_and_delete_endpoints(in_memory_session):
     db.commit()
 
     # create article
-    art = crud.create_article(db, title="TBD", content="c", author_id=admin.id)
+    art = crud.create_article(db, title="TBD", content="c", image_url="url", author_id=admin.id)
 
     # update
     updated = app_main.update_article(

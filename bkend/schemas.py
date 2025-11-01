@@ -36,17 +36,20 @@ class TokenData(BaseModel):
 class ArticleCreate(BaseModel):
     title: str
     content: str
+    image_url: str
 
 
 class ArticleUpdate(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
+    image_url: Optional[str] = None
 
 
 class ArticleResponse(BaseModel):
     id: int
     title: str
     content: str
+    image_url: str
     author_id: int
     created_at: datetime
     updated_at: datetime

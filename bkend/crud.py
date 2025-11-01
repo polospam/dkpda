@@ -20,8 +20,8 @@ def create_user(db: Session, email: str, hashed_password: str) -> User:
     return user
 
 # Articles
-def create_article(db: Session, title: str, content: str, author_id: int) -> Article:
-    article = Article(title=title, content=content, author_id=author_id)
+def create_article(db: Session, title: str, content: str, image_url: str, author_id: int) -> Article:
+    article = Article(title=title, content=content, image_url=image_url, author_id=author_id)
     db.add(article)
     db.commit()
     db.refresh(article)
@@ -124,7 +124,8 @@ def update_article(
         db: Session,
         article_id: int,
         title: Optional[str],
-        content: Optional[str]
+        content: Optional[str],
+        image_url: Optional[str]
     )-> Optional[Article]:
     article_q = select(Article).where(Article.id == article_id)
     article = db.execute(article_q).scalars().first()
@@ -134,6 +135,8 @@ def update_article(
         article.title = title
     if content is not None:
         article.content = content
+    if image_url is not None:
+        article.image_url = image_url
     article.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(article)

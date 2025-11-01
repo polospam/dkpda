@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 import hashlib
 
 from bkend import models
-from bkend.crud import create_user, get_user_by_email, create_article
+from bkend.crud import create_user, get_user_by_email, create_article, get_articles_with_votes
 from sqlalchemy import select
 
 
@@ -39,6 +39,8 @@ def main() -> None:
         if user:
             if getattr(user, "is_admin", False):
                 print(f"User {email} already exists and is an admin")
+                articles = get_articles_with_votes(db, user.id)
+                print("Articles in db: ", articles)
                 return
             user.is_admin = True
             db.commit()
@@ -62,8 +64,20 @@ def main() -> None:
             existing_articles = db.execute(select(models.Article)).scalars().all()
             if not existing_articles:
                 print("Adding two test articles...")
-                create_article(db, title="Welcome to Dikipedia", content="This is the first test article.", author_id=admin_user.id)
-                create_article(db, title="Second Article", content="Another satirical piece for testing.", author_id=admin_user.id)
+                create_article(
+                    db,
+                    title="Welcome to Dikipedia",
+                    content="This is the first test article.",
+                    author_id=admin_user.id,
+                    image_url="placeholder url"
+                )
+                create_article(
+                    db,
+                    title="Second Article",
+                    content="Another satirical piece for testing.",
+                    author_id=admin_user.id,
+                    image_url="placeholder url"
+                )
                 print("Added test articles.")
             else:
                 print("Articles already present; skipping test article creation.")
