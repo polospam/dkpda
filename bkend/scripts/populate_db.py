@@ -1,10 +1,12 @@
-from passlib.context import CryptContext
-from sqlalchemy.orm import Session
 import hashlib
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
 from bkend import models
+from bkend.schemas import ArticleCreate
 from bkend.crud import create_user, get_user_by_email, create_article, get_articles_with_votes
-from sqlalchemy import select
+
 
 
 PWD_CONTEXT = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
@@ -64,23 +66,22 @@ def main() -> None:
             existing_articles = db.execute(select(models.Article)).scalars().all()
             if not existing_articles:
                 print("Adding two test articles...")
-                create_article(
-                    db,
+                art_data = ArticleCreate(
                     title="Welcome to Dikipedia",
                     content="This is the first test article.",
-                    author_id=admin_user.id,
                     image_url="./media/cfclasspic.png"
                 )
-                create_article(
-                    db,
+                create_article(db, art_data, author_id=admin_user.id)
+
+                art_data = ArticleCreate(
                     title="Second Article",
                     content="Another satirical piece for testing.",
-                    author_id=admin_user.id,
                     image_url="./media/cfclasspic.png"
                 )
-                print("Added test articles.")
+                create_article(db, art_data, author_id=admin_user.id)
+                print("Added test articles; sample: ", art_data)
             else:
-                print("Articles already present; skipping test article creation.")
+                print("Articles already present; skipping test article creation")
 
 
 if __name__ == "__main__":

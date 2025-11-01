@@ -4,7 +4,6 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, EmailStr
 
-
 # Enum used by request/response schemas. Kept here to avoid creating a
 # separate top-level module (like `types.py`) which can shadow stdlib
 # modules and cause import-time issues. Keeping the enum next to the schemas
@@ -25,7 +24,6 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
 
-
 class UserResponse(BaseModel):
     id: int
     email: str
@@ -44,13 +42,13 @@ class ArticleCreate(BaseModel):
     title: str
     content: str
     image_url: str
-
+    category: Optional[Category] = None
 
 class ArticleUpdate(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
+    category: Optional[Category] = None
     image_url: Optional[str] = None
-
 
 class ArticleResponse(BaseModel):
     id: int
@@ -58,6 +56,7 @@ class ArticleResponse(BaseModel):
     content: str
     image_url: str
     author_id: int
+    category: Category
     created_at: datetime
     updated_at: datetime
     upvotes: int
@@ -65,7 +64,6 @@ class ArticleResponse(BaseModel):
     user_vote: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
-
 
 class VoteCreate(BaseModel):
     vote_type: VoteType

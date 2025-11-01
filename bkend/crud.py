@@ -5,7 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from .models import Article, User, Vote
-from .schemas import VoteType
+from .schemas import VoteType, ArticleCreate
 
 # Users
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
@@ -20,8 +20,8 @@ def create_user(db: Session, email: str, hashed_password: str) -> User:
     return user
 
 # Articles
-def create_article(db: Session, title: str, content: str, image_url: str, author_id: int) -> Article:
-    article = Article(title=title, content=content, image_url=image_url, author_id=author_id)
+def create_article(db: Session, article_data: ArticleCreate, author_id: int) -> Article:
+    article = Article(**article_data.model_dump(), author_id=author_id)
     db.add(article)
     db.commit()
     db.refresh(article)

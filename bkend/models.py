@@ -49,10 +49,7 @@ class Article(Base):
     title: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)
     image_url: Mapped[str] = mapped_column(String, nullable=True)
-    category: Mapped[Category] = mapped_column(
-        SQLEnum(Category),
-        nullable=False,
-        default=Category.GRAFT)
+    category: Mapped[Category] = mapped_column(SQLEnum(Category), default=Category.GRAFT)
     author_id: Mapped[Optional[int]] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(

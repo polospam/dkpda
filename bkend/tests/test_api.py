@@ -85,7 +85,8 @@ def test_update_and_delete_endpoints(in_memory_session):
     db.commit()
 
     # create article
-    art = crud.create_article(db, title="TBD", content="c", image_url="url", author_id=admin.id)
+    art_data = ArticleCreate(title="TBD", content="c", image_url="url")
+    art = crud.create_article(db, art_data, author_id=admin.id)
 
     # update
     updated = app_main.update_article(

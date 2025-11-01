@@ -204,9 +204,7 @@ def create_article(
 ):
     db_article = crud_create_article(
         db,
-        title=article.title,
-        content=article.content,
-        image_url=article.image_url,
+        article,
         author_id=current_user.id,
     )
     return {**db_article.__dict__, "upvotes": 0, "downvotes": 0, "user_vote": None}
