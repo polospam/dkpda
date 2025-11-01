@@ -69,14 +69,14 @@ def main() -> None:
                     title="Welcome to Dikipedia",
                     content="This is the first test article.",
                     author_id=admin_user.id,
-                    image_url="'./media/cfclasspic.png'"
+                    image_url="./media/cfclasspic.png"
                 )
                 create_article(
                     db,
                     title="Second Article",
                     content="Another satirical piece for testing.",
                     author_id=admin_user.id,
-                    image_url="'./media/cfclasspic.png'"
+                    image_url="./media/cfclasspic.png"
                 )
                 print("Added test articles.")
             else:
