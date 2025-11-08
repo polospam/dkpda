@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderArticle(article) {
-        const el = document.createElement('article');
+        const element = document.createElement('article');
 
         const img = document.createElement('img');
         img.src = article.image_url;
@@ -56,18 +56,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const p = document.createElement('p');
         p.textContent = article.content;
 
-        const meta = document.createElement('div');
-        meta.className = 'meta';
-        meta.textContent = `👍 ${article.upvotes}`;
+        const votes = document.createElement('span');
+        votes.className = 'votes';
+        votes.textContent = `👍 ${article.upvotes}`;
 
-        el.appendChild(img);
-        el.appendChild(topic);
-        el.appendChild(date);
-        el.appendChild(h2);
-        el.appendChild(p);
-        el.appendChild(meta);
+        element.appendChild(img);
+        element.appendChild(topic);
+        element.appendChild(date);
+        element.appendChild(votes);
+        element.appendChild(h2);
+        element.appendChild(p);
 
-        return el;
+        return element;
     }
 
     async function loadArticles() {
