@@ -5,6 +5,7 @@
     --secondary-bg: #ffffff; /* Light mode secondary */
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     --std-border-radius: 8px;
+    --gap: 0.7rem
 }
 body.dark-mode {
     --bg-color: #1c2526; /* Dark mode background */
@@ -75,12 +76,11 @@ nav {
     border-radius: var(--std-border-radius);
     height: 33vh;
     padding-top: 3vh;
-    margin: 1rem auto 0;
+    margin: var(--gap) auto 0;
     max-width: 1200px;
     text-align: center;
 }
 .hero h1 {
-    font-family: 'Playfair Display', sans-serif;
     font-size: 2rem;
     margin-bottom: 0.4rem;
 }
@@ -91,21 +91,20 @@ nav {
 
 main {
     max-width: 1200px;
-    margin: 1rem auto;
-    /* padding: 0 1rem; */
+    margin: var(--gap) auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 1rem;
+    gap: var(--gap);
 }
 .content {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--gap);
 }
 
 article {
     background-color: var(--secondary-bg);
-    padding: 1rem;
+    padding: var(--gap);
     border-radius: var(--std-border-radius);
     box-shadow: var(--shadow);
     transition: transform 0.2s ease;
@@ -114,24 +113,20 @@ article:hover {
     transform: translateY(-5px);
 }
 article h2 {
-    font-family: 'Playfair Display', sans-serif;
     font-size: 1.8rem;
+    font-weight: normal;
     color: var(--accent-color);
-    margin-bottom: 0.5rem;
-}
-article p {
-    font-size: 1rem;
+    margin: 0.3rem 0 0.5rem;
 }
 article img {
     display: block;
     max-width: 100%;
     border-radius: var(--std-border-radius);
+    margin-bottom: 0.5rem;
 }
 .topic {
     font-size: 0.8rem;
     text-transform: uppercase;
-    display: inline-block;
-    margin: 0.4rem 0;
 }
 .date {
     font-size: 0.8rem;
@@ -141,20 +136,16 @@ article img {
     font-size: 0.9rem;
     margin-left: 0.5rem;
 }
-aside {
-    background-color: var(--secondary-bg);
-    padding: 1rem;
-    border-radius: var(--std-border-radius);
-    box-shadow: var(--shadow);
-}
 aside article {
-    margin-bottom: 1rem;
+    margin-bottom: var(--gap);
+}
+aside article h3 {
+    color: var(--accent-color);
 }
 aside h3 {
-    font-family: 'Playfair Display', sans-serif;
     font-size: 1.2rem;
-    color: var(--accent-color);
-    margin: 0.5rem 0;
+    font-weight: normal;
+    margin: 0 0 var(--gap);
 }
 
 footer {
