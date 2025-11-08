@@ -4,7 +4,7 @@
     --accent-color: #e63946; /* Accent color */
     --secondary-bg: #ffffff; /* Light mode secondary */
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --std-border-radius: 8px;
+    --std-border-radius: 5px;
     --gap: 0.7rem
 }
 body.dark-mode {
@@ -141,19 +141,20 @@ aside article {
 }
 aside article h3 {
     color: var(--accent-color);
+    margin: var(--gap) 0 0.3rem;
 }
 aside h3 {
-    font-size: 1.2rem;
     font-weight: normal;
     margin: 0 0 var(--gap);
+    text-transform: uppercase;
 }
 
 footer {
-    background: linear-gradient(135deg, var(--accent-color), #d00000);
+    background-color: var(--accent-color);
     color: #fff;
     text-align: center;
     padding: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 footer p {
     font-size: 0.9rem;

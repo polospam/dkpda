@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const topic = document.createElement('span');
         topic.className = 'topic';
-        topic.textContent = 'satire';
+        topic.textContent = article.category;
 
         const date = document.createElement('span');
         date.className = 'date';

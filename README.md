@@ -47,3 +47,9 @@ cd /path/to/dkpda
 
 You should see the unit tests pass (the project currently includes CRUD and
 API unit tests).
+
+#### Run db seeding and anciliary operations
+
+From the project root run:
+
+`python -m bkend.scripts.populate_db`

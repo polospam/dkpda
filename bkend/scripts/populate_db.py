@@ -84,5 +84,30 @@ def main() -> None:
                 print("Articles already present; skipping test article creation")
 
 
+# Helper function to update the image_url of an article by its id
+def update_article_image_url(db: Session, article_id: int, new_image_url: str) -> None:
+    article = db.get(models.Article, article_id)
+    if article:
+        article.image_url = new_image_url
+        db.commit()
+
+
+# Function to update image URLs of existing articles; takes a list of tuples (id, new_url)
+def update_existing_articles_images(articles: list[tuple[int, str]]) -> None:
+    models.init_db()
+    with Session(models.engine) as db:
+        for article_id, new_url in articles:
+            update_article_image_url(db, article_id, new_url)
+            print(f"Updated article id {article_id} image_url to {new_url}")
+
+
 if __name__ == "__main__":
     main()
+
+    articles_to_update = [
+        (1, "./media/planetower.webp"),
+        (2, "./media/crypto-moguls.webp"),
+        (3, "./media/milei.jpeg"),
+        (4, "./media/trump-zelensky.webp"),
+    ]
+    update_existing_articles_images(articles_to_update)
