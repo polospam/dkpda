@@ -48,11 +48,20 @@ app = FastAPI(title="Article Voting System")
 # CORS configuration
 # Allow origins configured via BACKEND_CORS_ORIGINS env var as a comma-separated
 # list. If not set, default to allowing all origins (useful for quick local dev).
-raw_origins = os.getenv("BACKEND_CORS_ORIGINS", "*")
-if raw_origins == "*":
-    allow_origins = ["*"]
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1",
+    "http://127.0.0.1:3000",
+]
+
+raw_origins = os.getenv("BACKEND_CORS_ORIGINS")
+if raw_origins:
+    parsed_origins = [o.strip() for o in raw_origins.split(",") if o.strip() and o.strip() != "*"]
+    # Fall back to defaults if the env var resolved to an empty or wildcard-only list.
+    allow_origins = parsed_origins or DEFAULT_CORS_ORIGINS
 else:
-    allow_origins = [o.strip() for o in raw_origins.split(",") if o.strip()]
+    allow_origins = DEFAULT_CORS_ORIGINS
 
 app.add_middleware(
     CORSMiddleware,
