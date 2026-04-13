@@ -36,6 +36,12 @@ uvicorn bkend.main:app --reload
 Avoid running `python main.py` from inside the `bkend/` directory since that
 can change import resolution behaviour and accidentally shadow standard library modules.
 
+If testing the static local site (root:index.html) use a server, instead of opening the file directly (and make sure the port is added to CORS):
+
+```bash
+python3 -m http.server 3000
+```
+
 #### Run tests
 
 Run the test suite using the project's Python interpreter (virtualenv):
